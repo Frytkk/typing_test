@@ -78,3 +78,40 @@ def test_add_over_target():
     assert test1.typed_text_list == ['A', 'l', ' ', 'l']
     assert test1.correct_chars == 2
     assert test1.wrong_chars == 2
+
+
+def test_compatibility_1():
+    test1 = TypingTest("kot")
+    test1.add_remove_char('K')
+    test1.add_remove_char('o')
+    test1.add_remove_char(' ')
+    assert test1.compatibility_list == [False, True, False]
+
+
+def test_compatibility_2():
+    test1 = TypingTest("Ala ma kota")
+
+    test1.add_remove_char('A')
+    test1.add_remove_char('l')
+    test1.add_remove_char('a')
+    test1.add_remove_char('}')
+    test1.add_remove_char('{')
+    assert test1.typed_text_list == ['A', 'l', 'a']
+    assert test1.compatibility_list == [True, True, True]
+
+
+def test_compatibility_3():
+    test1 = TypingTest("Ala ma kota")
+    test1.add_remove_char('A')
+    test1.add_remove_char('l')
+    test1.add_remove_char('a')
+    test1.add_remove_char(' ')
+    test1.add_remove_char('\b')
+    test1.add_remove_char('\b')
+    test1.add_remove_char(' ')
+    test1.add_remove_char('k')
+    test1.add_remove_char('\b')
+    test1.add_remove_char('t')
+    test1.add_remove_char('\b')
+    assert test1.typed_text_list == ['A', 'l', ' ']
+    assert test1.compatibility_list == [True, True, False]
